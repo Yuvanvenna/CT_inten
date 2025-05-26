@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Carousel</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f0f0f0;
+      }
+
+      .carousel {
+        position: relative;
+        width: 600px;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .carousel-images img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        object-fit: cover;
+      }
+
+      .carousel-images img.active {
+        opacity: 1;
+      }
+
+      button.prev,
+      button.next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 24px;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      button.prev {
+        left: 20px;
+      }
+
+      button.next {
+        right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <div class="carousel-images">
+        <img
+          src="https://via.placeholder.com/600x400/FF5733/FFFFFF?text=Image+1"
+          alt="Image 1"
+          class="active"
+        />
+        <img
+          src="https://via.placeholder.com/600x400/33C1FF/FFFFFF?text=Image+2"
+          alt="Image 2"
+        />
+        <img
+          src="https://via.placeholder.com/600x400/75FF33/000000?text=Image+3"
+          alt="Image 3"
+        />
+        <img
+          src="https://via.placeholder.com/600x400/FFD700/000000?text=Image+4"
+          alt="Image 4"
+        />
+      </div>
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+
+    <script>
+      const images = document.querySelectorAll(".carousel-images img");
+      const prevBtn = document.querySelector(".prev");
+      const nextBtn = document.querySelector(".next");
+      let currentIndex = 0;
+
+      function showImage(index) {
+        images.forEach((img, i) => {
+          img.classList.toggle("active", i === index);
+        });
+      }
+
+      function showNextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      }
+
+      function showPrevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      }
+
+      nextBtn.addEventListener("click", showNextImage);
+      prevBtn.addEventListener("click", showPrevImage);
+
+      // Auto slide every 3 seconds
+      setInterval(showNextImage, 3000);
+    </script>
+  </body>
+</html>
