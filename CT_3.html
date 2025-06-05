@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Captain America Interactive Display</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: radial-gradient(circle at center, #0b1d3a 0%, #09162c 100%);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Enhanced animated stars */
+      .star-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(white 1px, transparent 1px),
+          radial-gradient(white 1px, transparent 1px);
+        background-size: 60px 60px, 120px 120px;
+        background-position: 0 0, 30px 30px;
+        opacity: 0.1;
+        z-index: 0;
+        animation: twinkle 1.5s ease-in-out infinite alternate;
+      }
+
+      @keyframes twinkle {
+        0% {
+          opacity: 0.05;
+        }
+        100% {
+          opacity: 0.15;
+        }
+      }
+
+      /* Floating particles */
+      .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 50%;
+        animation: float 8s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Captain America Character */
+      .captain-america {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        bottom: -10px;
+        /* bottom: -50px; */
+        left: 50%;
+        transform: translateX(-50%);
+        /* width: 400px;
+        height: 500px; */
+        z-index: 2;
+        background-image: url("cap.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        pointer-events: none;
+      }
+
+      .captain-arm {
+        position: absolute;
+        /* width: 120px;
+        height: 200px; */
+        width: 60px;
+        height: 60px;
+        background-image: url("leftarm.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        /* right: 80px;
+        top: 100px; */
+        /* right: 60px; */
+        left: 50px;
+        top: 75px;
+        transform-origin: top center;
+        animation: wave 3s ease-in-out infinite;
+        z-index: 3;
+      }
+
+      @keyframes wave {
+        0%,
+        100% {
+          transform: rotate(-10deg);
+        }
+        50% {
+          transform: rotate(20deg);
+        }
+      }
+
+      .cap-box-container {
+        position: relative;
+        z-index: 4;
+        transform: translateY(-70px);
+        transition: all 0.5s ease;
+      }
+
+      .cap-box {
+        position: relative;
+        background: rgba(255, 255, 255, 0.08);
+        border: 4px solid #c8102e;
+        padding: 50px;
+        border-radius: 20px;
+        width: 400px;
+        text-align: center;
+        color: #ffffff;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+          0 0 40px rgba(0, 40, 104, 0.4), 0 0 60px rgba(200, 16, 46, 0.3),
+          inset 0 0 30px rgba(255, 255, 255, 0.05);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 1;
+        cursor: pointer;
+      }
+
+      .cap-box::before {
+        content: "";
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
+        background: conic-gradient(
+          from 0deg,
+          #002868,
+          #ffffff,
+          #c8102e,
+          #002868
+        );
+        z-index: -1;
+        filter: blur(20px);
+        opacity: 0.7;
+        border-radius: inherit;
+        animation: rotateGlow 4s linear infinite;
+      }
+
+      .cap-box:hover {
+        transform: scale(1.08) rotateY(5deg);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+          0 0 60px rgba(0, 40, 104, 0.6), 0 0 80px rgba(200, 16, 46, 0.5),
+          inset 0 0 40px rgba(255, 255, 255, 0.1);
+      }
+
+      @keyframes rotateGlow {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Enhanced shield with proper proportions */
+      .shield-icon {
+        width: 90px;
+        height: 90px;
+        background: radial-gradient(
+          circle at center,
+          #ffffff 0%,
+          #ffffff 18%,
+          #c8102e 18%,
+          #c8102e 36%,
+          #ffffff 36%,
+          #ffffff 44%,
+          #c8102e 44%,
+          #c8102e 62%,
+          #002868 62%,
+          #002868 80%,
+          #ffffff 80%,
+          #ffffff 100%
+        );
+        border-radius: 50%;
+        margin: 0 auto 25px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
+          0 0 40px rgba(200, 16, 46, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        transition: all 0.2s ease;
+      }
+
+      /* Star in the center of shield */
+      .shield-icon::after {
+        content: "★";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-size: 24px;
+        text-shadow: 0 0 8px rgba(0, 40, 104, 0.8);
+        animation: pulse 1s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+
+      .cap-box:hover .shield-icon {
+        transform: rotate(360deg) scale(1.1);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+          0 0 50px rgba(200, 16, 46, 0.6);
+      }
+
+      .cap-box h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(0, 40, 104, 0.8),
+          2px 2px 4px rgba(0, 0, 0, 0.5);
+        font-weight: bold;
+        letter-spacing: 1px;
+        animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        0% {
+          text-shadow: 0 0 10px rgba(0, 40, 104, 0.8),
+            2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+            2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      .cap-box p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #e8e8e8;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        margin-bottom: 20px;
+      }
+
+      /* Action buttons */
+      .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 25px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: 2px solid;
+        border-radius: 25px;
+        background: transparent;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary {
+        border-color: #c8102e;
+        box-shadow: 0 0 10px rgba(200, 16, 46, 0.3);
+      }
+
+      .btn-primary:hover {
+        background: #c8102e;
+        box-shadow: 0 0 20px rgba(200, 16, 46, 0.6);
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        border-color: #002868;
+        box-shadow: 0 0 10px rgba(0, 40, 104, 0.3);
+      }
+
+      .btn-secondary:hover {
+        background: #002868;
+        box-shadow: 0 0 20px rgba(0, 40, 104, 0.6);
+        transform: translateY(-2px);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .captain-america {
+          width: 300px;
+          height: 375px;
+          bottom: -30px;
+        }
+
+        .captain-arm {
+          width: 90px;
+          height: 150px;
+          right: 60px;
+          top: 75px;
+        }
+
+        .cap-box-container {
+          transform: translateY(-70px);
+        }
+
+        .cap-box {
+          width: 90%;
+          padding: 30px;
+        }
+
+        .shield-icon {
+          width: 70px;
+          height: 70px;
+        }
+
+        .cap-box h2 {
+          font-size: 26px;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .captain-america {
+          width: 200px;
+          height: 250px;
+          bottom: -20px;
+        }
+
+        .captain-arm {
+          width: 60px;
+          height: 100px;
+          right: 40px;
+          top: 50px;
+        }
+
+        .cap-box-container {
+          transform: translateY(-50px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="star-bg"></div>
+    <div class="particles"></div>
+
+    <!-- Captain America Character -->
+    <div class="captain-america">
+      <div class="captain-arm"></div>
+    </div>
+
+    <!-- Box Container -->
+    <div class="cap-box-container">
+      <div class="cap-box">
+        <div class="shield-icon"></div>
+        <h2>Captain's Command</h2>
+        <p>
+          Embodying the unwavering spirit of freedom, justice, and honor. <br />
+          Ready to answer the call of duty. 🛡️
+        </p>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary">Assemble</button>
+          <button class="btn btn-secondary">Mission Brief</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Create floating particles
+      function createParticle() {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = Math.random() * 100 + "%";
+        particle.style.animationDelay = Math.random() * 15 + "s";
+        particle.style.animationDuration = Math.random() * 10 + 10 + "s";
+        document.querySelector(".particles").appendChild(particle);
+
+        // Remove particle after animation
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+        }, 25000);
+      }
+
+      // Generate particles periodically
+      setInterval(createParticle, 800);
+
+      // Button interactions
+      document
+        .querySelector(".btn-primary")
+        .addEventListener("click", function () {
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "";
+          }, 150);
+
+          // Special effect when Assemble is clicked
+          document.querySelector(".cap-box-container").style.animation =
+            "assemblePulse 0.5s";
+          setTimeout(() => {
+            document.querySelector(".cap-box-container").style.animation = "";
+          }, 500);
+        });
+
+      document
+        .querySelector(".btn-secondary")
+        .addEventListener("click", function () {
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "";
+          }, 150);
+        });
+
+      // Enhanced box interaction
+      const capBox = document.querySelector(".cap-box");
+      capBox.addEventListener("mouseenter", function () {
+        this.style.filter = "brightness(1.1)";
+        document.querySelector(".captain-arm").style.animation =
+          "wave 1s ease-in-out infinite";
+      });
+
+      capBox.addEventListener("mouseleave", function () {
+        this.style.filter = "brightness(1)";
+        document.querySelector(".captain-arm").style.animation =
+          "wave 3s ease-in-out infinite";
+      });
+
+      // Add assemble pulse animation
+      const style = document.createElement("style");
+      style.textContent = `
+      @keyframes assemblePulse {
+        0% { transform: translateY(-100px) scale(1); }
+        50% { transform: translateY(-100px) scale(1.1); }
+        100% { transform: translateY(-100px) scale(1); }
+      }
+    `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>
