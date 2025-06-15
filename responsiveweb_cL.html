@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Website Layout</title>
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f4f4f4;
+      }
+
+      /* Header and Navigation */
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 0;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Main Container with Grid Layout */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        grid-gap: 2rem;
+        min-height: calc(100vh - 200px);
+      }
+
+      /* Main Content Area */
+      main {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section {
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .hero-section h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-section p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .card {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .card h3 {
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+
+      /* Sidebar */
+      aside {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+      }
+
+      aside h2 {
+        color: #667eea;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .sidebar-list {
+        list-style: none;
+      }
+
+      .sidebar-list li {
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-list a {
+        display: block;
+        padding: 0.75rem 1rem;
+        background: #f8f9fa;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-list a:hover {
+        background: #667eea;
+        color: white;
+        border-left-color: #764ba2;
+        transform: translateX(5px);
+      }
+
+      .widget {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+      }
+
+      .widget h3 {
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+
+      /* Footer */
+      footer {
+        background: #2d3436;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 3rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h3 {
+        margin-bottom: 1rem;
+        color: #74b9ff;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: #ddd;
+        text-decoration: none;
+      }
+
+      .footer-section a:hover {
+        color: #74b9ff;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #636e72;
+        padding-top: 1rem;
+        color: #b2bec3;
+      }
+
+      /* Responsive Design - Tablet */
+      @media screen and (max-width: 768px) {
+        .container {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-container {
+          padding: 0 1rem;
+        }
+
+        nav ul {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #667eea;
+          flex-direction: column;
+          gap: 0;
+          display: none;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul.active {
+          display: flex;
+        }
+
+        nav li {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav a {
+          display: block;
+          padding: 1rem 2rem;
+          border-radius: 0;
+        }
+
+        .mobile-menu-toggle {
+          display: block;
+        }
+
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+
+        .content-grid {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          position: static;
+        }
+      }
+
+      /* Responsive Design - Mobile */
+      @media screen and (max-width: 480px) {
+        .nav-container {
+          padding: 0 0.5rem;
+        }
+
+        .container {
+          padding: 0 0.5rem;
+        }
+
+        main,
+        aside {
+          padding: 1rem;
+        }
+
+        .hero-section {
+          padding: 2rem 1rem;
+        }
+
+        .hero-section h1 {
+          font-size: 1.8rem;
+        }
+
+        .footer-content {
+          padding: 0 1rem;
+          grid-template-columns: 1fr;
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Navigation -->
+    <header>
+      <div class="nav-container">
+        <a href="#" class="logo">ModernWeb</a>
+        <nav>
+          <ul id="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button class="mobile-menu-toggle" id="mobile-toggle">☰</button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Container with Grid Layout -->
+    <div class="container">
+      <!-- Main Content Area -->
+      <main>
+        <section class="hero-section">
+          <h1>Welcome to ModernWeb</h1>
+          <p>
+            Creating beautiful, responsive websites with modern CSS techniques
+          </p>
+        </section>
+
+        <section>
+          <h2>Our Services</h2>
+          <div class="content-grid">
+            <div class="card">
+              <h3>Web Design</h3>
+              <p>
+                We create stunning, user-friendly websites that capture your
+                brand's essence and engage your audience effectively.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Responsive Development</h3>
+              <p>
+                Our websites work perfectly on all devices, from desktop
+                computers to mobile phones, ensuring a seamless user experience.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Performance Optimization</h3>
+              <p>
+                We optimize your website for speed and performance, ensuring
+                fast loading times and excellent user experience.
+              </p>
+            </div>
+            <div class="card">
+              <h3>SEO Integration</h3>
+              <p>
+                Built-in SEO best practices help your website rank higher in
+                search results and attract more organic traffic.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Why Choose Us?</h2>
+          <p>
+            We combine cutting-edge design with robust functionality to deliver
+            websites that not only look great but perform exceptionally. Our
+            team stays updated with the latest web technologies and design
+            trends to ensure your website stands out in today's competitive
+            digital landscape.
+          </p>
+
+          <p>
+            From initial concept to final deployment, we work closely with our
+            clients to understand their unique needs and deliver customized
+            solutions that exceed expectations. Our responsive design approach
+            ensures your website looks and functions perfectly across all
+            devices and screen sizes.
+          </p>
+        </section>
+      </main>
+
+      <!-- Sidebar -->
+      <aside>
+        <h2>Quick Links</h2>
+        <ul class="sidebar-list">
+          <li><a href="#getting-started">Getting Started</a></li>
+          <li><a href="#web-design">Web Design Tips</a></li>
+          <li><a href="#css-guides">CSS Guides</a></li>
+          <li><a href="#javascript">JavaScript Tutorials</a></li>
+          <li><a href="#responsive">Responsive Design</a></li>
+          <li><a href="#best-practices">Best Practices</a></li>
+          <li><a href="#tools">Development Tools</a></li>
+        </ul>
+
+        <div class="widget">
+          <h3>Recent Updates</h3>
+          <p>
+            New CSS Grid tutorial available! Learn how to create complex layouts
+            with ease using modern CSS Grid techniques.
+          </p>
+        </div>
+
+        <div class="widget">
+          <h3>Newsletter</h3>
+          <p>
+            Subscribe to our newsletter for the latest web development tips,
+            tricks, and trends delivered straight to your inbox.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About ModernWeb</h3>
+          <p>
+            We're passionate about creating exceptional web experiences that
+            combine beautiful design with powerful functionality.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <p><a href="#">Web Design</a></p>
+          <p><a href="#">Development</a></p>
+          <p><a href="#">SEO Optimization</a></p>
+          <p><a href="#">Consulting</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Info</h3>
+          <p>Email: info@modernweb.com</p>
+          <p>Phone: (555) 123-4567</p>
+          <p>Address: 123 Web Street, Digital City</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 ModernWeb. All rights reserved. | Designed with modern CSS
+          techniques
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle functionality
+      const mobileToggle = document.getElementById("mobile-toggle");
+      const navMenu = document.getElementById("nav-menu");
+
+      mobileToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", function (event) {
+        if (!event.target.closest("nav")) {
+          navMenu.classList.remove("active");
+        }
+      });
+
+      // Close mobile menu when window is resized
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) {
+          navMenu.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>
