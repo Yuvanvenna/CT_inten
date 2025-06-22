@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultra Button</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .glass-button {
+        position: relative;
+        padding: 18px 45px;
+        font-size: 20px;
+        color: #ffffffcc;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.4),
+          inset 0 0 10px rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        z-index: 1;
+        animation: pulse-glow 2.5s infinite ease-in-out;
+        overflow: hidden;
+      }
+
+      .glass-button::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, #0ff, #00f6ff, #0ff, #00f6ff);
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(25px);
+        animation: border-shift 6s linear infinite;
+      }
+
+      .glass-button:hover {
+        color: #00ffee;
+        background: rgba(0, 0, 0, 0.3);
+        transform: scale(1.06);
+        box-shadow: 0 0 25px rgba(0, 255, 204, 0.8),
+          inset 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      .glass-button:active {
+        transform: scale(0.98);
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(0, 255, 204, 0.3),
+            inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(184, 19, 19, 0.7),
+            inset 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+      }
+
+      @keyframes border-shift {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="glass-button">hehehehe</button>
+  </body>
+</html>
